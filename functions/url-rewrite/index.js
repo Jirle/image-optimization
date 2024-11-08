@@ -46,8 +46,19 @@ function handler(event) {
           if (request.querystring[operation]["value"]) {
             var width = parseInt(request.querystring[operation]["value"]);
             if (!isNaN(width) && width > 0) {
+              var imageSizes = [16, 32, 48, 64, 96, 128, 256, 384];
+              var deviceSizes = [640, 750, 828, 1080, 1200];
+
+              var allSizes = imageSizes.concat(deviceSizes);
+
+              var closestWidth = allSizes.reduce(function (prev, curr) {
+                return Math.abs(curr - width) < Math.abs(prev - width)
+                  ? curr
+                  : prev;
+              });
+
               // you can protect the Lambda function by setting a max value, e.g. if (width > 4000) width = 4000;
-              normalizedOperations["width"] = width.toString();
+              normalizedOperations["width"] = closestWidth.toString();
             }
           }
           break;
