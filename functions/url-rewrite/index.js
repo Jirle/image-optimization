@@ -51,15 +51,15 @@ function handler(event) {
             }
           }
           break;
-        case "height":
-          if (request.querystring[operation]["value"]) {
-            var height = parseInt(request.querystring[operation]["value"]);
-            if (!isNaN(height) && height > 0) {
-              // you can protect the Lambda function by setting a max value, e.g. if (height > 4000) height = 4000;
-              normalizedOperations["height"] = height.toString();
-            }
-          }
-          break;
+        // case "height":
+        //   if (request.querystring[operation]["value"]) {
+        //     var height = parseInt(request.querystring[operation]["value"]);
+        //     if (!isNaN(height) && height > 0) {
+        //       // you can protect the Lambda function by setting a max value, e.g. if (height > 4000) height = 4000;
+        //       normalizedOperations["height"] = height.toString();
+        //     }
+        //   }
+        //   break;
         case "quality":
           if (request.querystring[operation]["value"]) {
             var quality = parseInt(request.querystring[operation]["value"]);
