@@ -344,9 +344,15 @@ export class ImageOptimizationStack extends Stack {
       oac.getAtt("Id"),
     );
 
-    imageProcessing.addPermission("AllowCloudFrontServicePrincipal", {
+    // Grant permissions for both lambda:InvokeFunctionUrl and lambda:InvokeFunction as required by AWS
+    imageProcessing.addPermission("AllowCloudFrontInvokeFunctionUrl", {
       principal: new iam.ServicePrincipal("cloudfront.amazonaws.com"),
       action: "lambda:InvokeFunctionUrl",
+      sourceArn: `arn:aws:cloudfront::${this.account}:distribution/${imageDelivery.distributionId}`,
+    });
+    imageProcessing.addPermission("AllowCloudFrontInvokeFunction", {
+      principal: new iam.ServicePrincipal("cloudfront.amazonaws.com"),
+      action: "lambda:InvokeFunction",
       sourceArn: `arn:aws:cloudfront::${this.account}:distribution/${imageDelivery.distributionId}`,
     });
 
